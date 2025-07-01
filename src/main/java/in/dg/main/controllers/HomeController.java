@@ -7,16 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-// Controller for landing page
 @Controller
 public class HomeController {
+
     @Autowired
     private ProjectRepository projectRepository;
 
     @Autowired
     private ClientRepository clientRepository;
 
-    @GetMapping("/")
+    @GetMapping({"/", "/home"})
     public String home(Model model) {
         model.addAttribute("projects", projectRepository.findAll());
         model.addAttribute("clients", clientRepository.findAll());
