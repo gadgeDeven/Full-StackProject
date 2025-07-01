@@ -41,8 +41,14 @@ public class ProjectController {
     public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project updatedProject) {
         Optional<Project> existingProject = projectRepository.findById(id);
         if (existingProject.isPresent()) {
-            updatedProject.setId(id);
-            return ResponseEntity.ok(projectRepository.save(updatedProject));
+            Project project = existingProject.get();
+            project.setName(updatedProject.getName());
+            project.setDescription(updatedProject.getDescription());
+            project.setStartDate(updatedProject.getStartDate());
+            project.setEndDate(updatedProject.getEndDate());
+            project.setImage(updatedProject.getImage());
+            project.setClient(updatedProject.getClient());
+            return ResponseEntity.ok(projectRepository.save(project));
         }
         return ResponseEntity.notFound().build();
     }

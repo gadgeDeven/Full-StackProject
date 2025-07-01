@@ -2,13 +2,175 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Landing Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullstack Task</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .hero-section {
+            background: url('/images/lead-generation-landing-page-images/pexels-fauxels-3182834.svg') no-repeat center;
+            background-size: cover;
+            padding: 100px 0;
+            position: relative;
+        }
+        .hero-section::before {
+            content: '';
+            background: url('/images/lead-generation-landing-page-shaps/Ellipse 1.svg') no-repeat;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+        }
+        .project-card, .client-card { margin-bottom: 20px; }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .card:hover { transform: scale(1.05); }
+        .card-img-top { height: 200px; object-fit: cover; border-radius: 10px 10px 0 0; }
+        .contact-section, .newsletter-section { padding: 50px 0; }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .btn-primary:hover { background-color: #0056b3; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to the Fullstack Task</h1>
-        <p>This is the landing page placeholder for projects, clients, contact form, and newsletter.</p>
-    </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/images/lead-generation-landing-page-images/logo.svg}" alt="Logo" width="50">
+            </a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="#">
+                    <img th:src="@{/images/lead-generation-landing-page-icon/home.svg}" alt="Home" width="20"> Home
+                </a>
+                <a class="nav-link" href="#">
+                    <img th:src="@{/images/lead-generation-landing-page-icon/Linkedin.svg}" alt="LinkedIn" width="20"> LinkedIn
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center text-white">
+        <div class="container">
+            <h1>Welcome to Our Fullstack Task</h1>
+            <p>Explore our projects and connect with our happy clients</p>
+        </div>
+    </section>
+
+    <!-- Our Projects Section -->
+    <section class="container my-5">
+        <h2>Our Projects</h2>
+        <div class="row" th:each="project : ${projects}">
+            <div class="col-md-4 project-card">
+                <div class="card">
+                    <img th:src="${project.image} ?: @{/images/lead-generation-landing-page-images/pexels-brett-sayles-2881232.svg}" class="card-img-top" alt="Project Image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${project.name}">Project Name</h5>
+                        <p class="card-text" th:text="${project.description}">Project Description</p>
+                        <a href="#" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Happy Clients Section -->
+    <section class="container my-5">
+        <h2>Happy Clients</h2>
+        <div class="row" th:each="client : ${clients}">
+            <div class="col-md-4 client-card">
+                <div class="card">
+                    <img th:src="${client.image} ?: @{/images/lead-generation-landing-page-images/Ellipse 11.svg}" class="card-img-top" alt="Client Image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${client.name}">Client Name</h5>
+                        <p class="card-text" th:text="${client.description}">Client Description</p>
+                        <p class="card-text"><strong th:text="${client.designation}">Designation</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="contact-section bg-light">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form th:action="@{/api/contacts}" method="post" id="contactForm">
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mobileNumber" class="form-label">Mobile Number</label>
+                    <input type="text" class="form-control" id="mobileNumber" name="mobileNumber" required>
+                </div>
+                <div class="mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="city" name="city" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Newsletter Subscription Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <h2>Subscribe to Our Newsletter</h2>
+            <form th:action="@{/api/newsletters}" method="post" id="newsletterForm">
+                <div class="mb-3">
+                    <label for="newsletterEmail" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="newsletterEmail" name="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>© 2025 Fullstack Task</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Client-side form validation
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            const email = document.getElementById('email').value;
+            const mobile = document.getElementById('mobileNumber').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const mobileRegex = /^\d{10}$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                event.preventDefault();
+            }
+            if (!mobileRegex.test(mobile)) {
+                alert('Please enter a valid 10-digit mobile number.');
+                event.preventDefault();
+            }
+        });
+
+        document.getElementById('newsletterForm').addEventListener('submit', function(event) {
+            const email = document.getElementById('newsletterEmail').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>

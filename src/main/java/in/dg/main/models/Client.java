@@ -13,6 +13,9 @@ public class Client {
     private String name;
     private String email;
     private String phone;
+    private String description;
+    private String designation;
+    private String image; // Path to client's image (e.g., /images/Ellipse 11.svg)
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> projects;
@@ -48,6 +51,30 @@ public class Client {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public List<Project> getProjects() {

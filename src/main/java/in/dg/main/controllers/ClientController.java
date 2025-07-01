@@ -42,11 +42,12 @@ public class ClientController {
         Optional<Client> existingClientOpt = clientRepository.findById(id);
         if (existingClientOpt.isPresent()) {
             Client existingClient = existingClientOpt.get();
-            // Update fields
             existingClient.setName(updatedClient.getName());
             existingClient.setEmail(updatedClient.getEmail());
             existingClient.setPhone(updatedClient.getPhone());
-            // Preserve existing projects list to avoid Hibernate reference issue
+            existingClient.setDescription(updatedClient.getDescription());
+            existingClient.setDesignation(updatedClient.getDesignation());
+            existingClient.setImage(updatedClient.getImage());
             if (updatedClient.getProjects() != null) {
                 existingClient.setProjects(updatedClient.getProjects());
             }

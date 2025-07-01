@@ -14,6 +14,7 @@ public class Project {
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String image; // Path to project's image (e.g., /images/pexels-brett-sayles-2881232.svg)
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -58,6 +59,14 @@ public class Project {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Client getClient() {
